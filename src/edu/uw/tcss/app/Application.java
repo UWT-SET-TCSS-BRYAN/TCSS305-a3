@@ -1,5 +1,6 @@
 package edu.uw.tcss.app;
 
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialDarkerIJTheme;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighterIJTheme;
 import edu.uw.tcss.app.view.SketcherGui;
 import java.awt.EventQueue;
@@ -27,6 +28,7 @@ public final class Application {
     public static void main(final String[] theArgs) {
 //        FlatIntelliJLaf.setup();
         FlatMaterialLighterIJTheme.setup();
+//        FlatMaterialDarkerIJTheme.setup();
         EventQueue.invokeLater(SketcherGui::createAndShowGui);
     }
 
