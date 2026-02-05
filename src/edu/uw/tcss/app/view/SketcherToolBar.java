@@ -1,9 +1,8 @@
 
 package edu.uw.tcss.app.view;
 
-import static edu.uw.tcss.app.model.PropChangeEnabledShapeCreatorControls.PROPERTY_COLOR;
-
 import edu.uw.tcss.app.model.ShapeCreatorControls;
+import edu.uw.tcss.app.model.SketcherEvent;
 import edu.uw.tcss.app.view.icons.ColorIcon;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -111,15 +110,20 @@ public class SketcherToolBar extends JToolBar implements PropertyChangeListener 
 
     private void addListeners() {
 
-
-
     }
 
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        if (PROPERTY_COLOR.equals(theEvent.getPropertyName())) {
-            myColorIcon.setColor((Color) theEvent.getNewValue());
-            myColorIcon.repaint();
+        if (theEvent.getNewValue() instanceof final SketcherEvent event) {
+            switch (event) {
+                case final SketcherEvent.ColorChanged e -> {
+                    myColorIcon.setColor(e.newColor());
+                    myColorIcon.repaint();
+                }
+                case final SketcherEvent.CurrentShapeChanged e -> { /* not used */ }
+                case final SketcherEvent.SavedShapesChanged e -> { /* not used */ }
+                case final SketcherEvent.WidthChanged e -> { /* not used */ }
+            }
         }
     }
 }

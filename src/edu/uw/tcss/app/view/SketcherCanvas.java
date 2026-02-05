@@ -1,11 +1,9 @@
 
 package edu.uw.tcss.app.view;
 
-import static edu.uw.tcss.app.model.PropChangeEnabledShapeCreatorControls.PROPERTY_CURRENT_SHAPE;
-import static edu.uw.tcss.app.model.PropChangeEnabledShapeCreatorControls.PROPERTY_SAVED_SHAPES;
-
 import edu.uw.tcss.app.model.ShapeCreatorControls;
 import edu.uw.tcss.app.model.ShapeCreatorControls.ColorfulShape;
+import edu.uw.tcss.app.model.SketcherEvent;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -109,16 +107,22 @@ public class SketcherCanvas extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        if (PROPERTY_CURRENT_SHAPE.equals(theEvent.getPropertyName())) {
-            myCurrentShape =  theEvent.getNewValue() == null
-                    ? new ColorfulShape(OFF_SCREEN, Color.BLACK, 0)
-                    : (ColorfulShape) theEvent.getNewValue();
-            repaint();
-        } else if (PROPERTY_SAVED_SHAPES.equals(theEvent.getPropertyName())) {
-            myExistingShapes.clear();
-            //noinspection unchecked
-            myExistingShapes.addAll((List<ColorfulShape>) theEvent.getNewValue());
-            repaint();
+        if (theEvent.getNewValue() instanceof final SketcherEvent event) {
+            switch (event) {
+                case final SketcherEvent.CurrentShapeChanged e -> {
+                    myCurrentShape = e.shape() == null
+                            ? new ColorfulShape(OFF_SCREEN, Color.BLACK, 0)
+                            : e.shape();
+                    repaint();
+                }
+                case final SketcherEvent.SavedShapesChanged e -> {
+                    myExistingShapes.clear();
+                    myExistingShapes.addAll(e.shapes());
+                    repaint();
+                }
+                case final SketcherEvent.ColorChanged e -> { /* not used */ }
+                case final SketcherEvent.WidthChanged e -> { /* not used */ }
+            }
         }
     }
 

@@ -86,7 +86,9 @@ public class ShapeCreator implements PropChangeEnabledShapeCreatorControls {
                     new ColorfulShape(myPencil.getShape(),
                             myCurrentColor,
                             myCurrentWidth);
-            myPcs.firePropertyChange(PROPERTY_CURRENT_SHAPE, null, ps);
+            final SketcherEvent event =
+                    new SketcherEvent.CurrentShapeChanged(ps, SketcherEvent.now());
+            myPcs.firePropertyChange(event.getPropertyName(), null, event);
         }
     }
 
@@ -107,7 +109,9 @@ public class ShapeCreator implements PropChangeEnabledShapeCreatorControls {
                     new ColorfulShape(myPencil.getShape(),
                             myCurrentColor,
                             myCurrentWidth);
-            myPcs.firePropertyChange(PROPERTY_CURRENT_SHAPE, null, ps);
+            final SketcherEvent event =
+                    new SketcherEvent.CurrentShapeChanged(ps, SketcherEvent.now());
+            myPcs.firePropertyChange(event.getPropertyName(), null, event);
         }
     }
 
@@ -136,8 +140,13 @@ public class ShapeCreator implements PropChangeEnabledShapeCreatorControls {
             // prepare the pencil for the next shape.
             myPencil.reset();
 
-            myPcs.firePropertyChange(PROPERTY_CURRENT_SHAPE, ps, null);
-            myPcs.firePropertyChange(PROPERTY_SAVED_SHAPES, null, deepCopyShapesList());
+            final SketcherEvent currentEvent =
+                    new SketcherEvent.CurrentShapeChanged(null, SketcherEvent.now());
+            myPcs.firePropertyChange(currentEvent.getPropertyName(), null, currentEvent);
+            final SketcherEvent savedEvent =
+                    new SketcherEvent.SavedShapesChanged(deepCopyShapesList(),
+                            SketcherEvent.now());
+            myPcs.firePropertyChange(savedEvent.getPropertyName(), null, savedEvent);
         }
     }
 
@@ -145,7 +154,9 @@ public class ShapeCreator implements PropChangeEnabledShapeCreatorControls {
     public void setColor(final Color theColor) {
         final Color old = myCurrentColor;
         myCurrentColor = theColor;
-        myPcs.firePropertyChange(PROPERTY_COLOR, old, myCurrentColor);
+        final SketcherEvent event =
+                new SketcherEvent.ColorChanged(old, myCurrentColor, SketcherEvent.now());
+        myPcs.firePropertyChange(event.getPropertyName(), null, event);
     }
 
 
@@ -158,7 +169,9 @@ public class ShapeCreator implements PropChangeEnabledShapeCreatorControls {
     public void setWidth(final int theWidth) {
         final int old = myCurrentWidth;
         myCurrentWidth = theWidth;
-        myPcs.firePropertyChange(PROPERTY_WIDTH, old, myCurrentWidth);
+        final SketcherEvent event =
+                new SketcherEvent.WidthChanged(old, myCurrentWidth, SketcherEvent.now());
+        myPcs.firePropertyChange(event.getPropertyName(), null, event);
     }
 
     @Override
@@ -169,14 +182,20 @@ public class ShapeCreator implements PropChangeEnabledShapeCreatorControls {
     @Override
     public void clear() {
         myShapeList.clear();
-        myPcs.firePropertyChange(PROPERTY_SAVED_SHAPES, null, deepCopyShapesList());
+        final SketcherEvent event =
+                new SketcherEvent.SavedShapesChanged(deepCopyShapesList(),
+                        SketcherEvent.now());
+        myPcs.firePropertyChange(event.getPropertyName(), null, event);
     }
 
     @Override
     public void undo() {
         if (!myShapeList.isEmpty()) {
             myShapeList.removeLast();
-            myPcs.firePropertyChange(PROPERTY_SAVED_SHAPES, null, deepCopyShapesList());
+            final SketcherEvent event =
+                    new SketcherEvent.SavedShapesChanged(deepCopyShapesList(),
+                            SketcherEvent.now());
+            myPcs.firePropertyChange(event.getPropertyName(), null, event);
         }
     }
 
@@ -205,10 +224,22 @@ public class ShapeCreator implements PropChangeEnabledShapeCreatorControls {
     }
 
     private void fireAllProperties() {
-        myPcs.firePropertyChange(PROPERTY_SAVED_SHAPES, null, deepCopyShapesList());
-        myPcs.firePropertyChange(PROPERTY_WIDTH, null, myCurrentWidth);
-        myPcs.firePropertyChange(PROPERTY_COLOR, null, myCurrentColor);
-        myPcs.firePropertyChange(PROPERTY_CURRENT_SHAPE, null, null);
+        final SketcherEvent savedEvent =
+                new SketcherEvent.SavedShapesChanged(deepCopyShapesList(),
+                        SketcherEvent.now());
+        myPcs.firePropertyChange(savedEvent.getPropertyName(), null, savedEvent);
+
+        final SketcherEvent widthEvent =
+                new SketcherEvent.WidthChanged(0, myCurrentWidth, SketcherEvent.now());
+        myPcs.firePropertyChange(widthEvent.getPropertyName(), null, widthEvent);
+
+        final SketcherEvent colorEvent =
+                new SketcherEvent.ColorChanged(null, myCurrentColor, SketcherEvent.now());
+        myPcs.firePropertyChange(colorEvent.getPropertyName(), null, colorEvent);
+
+        final SketcherEvent currentEvent =
+                new SketcherEvent.CurrentShapeChanged(null, SketcherEvent.now());
+        myPcs.firePropertyChange(currentEvent.getPropertyName(), null, currentEvent);
     }
 
     private List<ColorfulShape> deepCopyShapesList() {
