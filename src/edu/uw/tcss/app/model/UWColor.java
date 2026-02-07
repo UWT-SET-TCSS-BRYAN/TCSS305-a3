@@ -9,7 +9,7 @@ import java.awt.Color;
  * UW Brand</a>.
  * 
  * @author Charles Bryan (cfb3@uw.edu)
- * @version Autumn 2016
+ * @version Winter 2026
  *
  */
 public enum UWColor {

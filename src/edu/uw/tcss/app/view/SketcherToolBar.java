@@ -22,7 +22,7 @@ import javax.swing.SwingConstants;
  * 
  * @author Charles Bryan
  * @author Steven Golob
- * @version Winter 2025
+ * @version Winter 2026
  */
 public class SketcherToolBar extends JToolBar implements PropertyChangeListener {
 

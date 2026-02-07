@@ -9,7 +9,7 @@ import java.util.List;
  * Each permitted record type carries the relevant data for its event.
  *
  * @author Charles Bryan
- * @version Winter 2025
+ * @version Winter 2026
  */
 public sealed interface SketcherEvent permits
         SketcherEvent.CurrentShapeChanged,

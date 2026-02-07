@@ -9,7 +9,7 @@ import java.awt.Shape;
  * 
  * @author Charles Bryan
  * @author Steven Golob
- * @version Winter 2025
+ * @version Winter 2026
  */
 public interface PaintTool {
 
