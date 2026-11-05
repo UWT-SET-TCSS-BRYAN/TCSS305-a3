@@ -9,7 +9,7 @@ import java.awt.Color;
  * UW Brand</a>.
  * 
  * @author Charles Bryan (cfb3@uw.edu)
- * @version Winter 2026
+ * @version Autumn 2026
  *
  */
 public enum UWColor {
@@ -41,10 +41,10 @@ public enum UWColor {
     /**
      * Creates the UWColor object. 
      * 
-     * @param theHexString the hexadecimal representation of the UW Color's RGB values. 
+     * @param hexString the hexadecimal representation of the UW Color's RGB values. 
      */
-    UWColor(final String theHexString) {
-        myColor = Color.decode(theHexString);
+    UWColor(final String hexString) {
+        myColor = Color.decode(hexString);
     }
     
     /**

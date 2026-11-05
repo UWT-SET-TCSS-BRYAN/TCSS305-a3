@@ -8,39 +8,39 @@ import java.awt.Shape;
  *
  * @author Charles Bryan
  * @author Steven Golob
- * @version Winter 2026
+ * @version Autumn 2026
  */
 public interface ShapeCreatorControls {
 
     /**
      * Sets where the shape begins (i.e. the shape's initial starting point).
      *
-     * @param theX x coordinate of the starting point
-     * @param theY y coordinate of the starting point
+     * @param x x coordinate of the starting point
+     * @param y y coordinate of the starting point
      */
-    void startDrawing(int theX, int theY);
+    void startDrawing(int x, int y);
 
     /**
      * Sets where the shape's last point is.
      *
-     * @param theX x coordinate of the last point
-     * @param theY y coordinate of the last point
+     * @param x x coordinate of the last point
+     * @param y y coordinate of the last point
      */
-    void continueDrawing(int theX, int theY);
+    void continueDrawing(int x, int y);
 
     /**
      * Finalizes the shape.
      *
-     * @param theX x coordinate of the final point
-     * @param theY y coordinate of the final point
+     * @param x x coordinate of the final point
+     * @param y y coordinate of the final point
      */
-    void endDrawing(int theX, int theY);
+    void endDrawing(int x, int y);
 
     /**
      * Sets the color of the shape's line.
-     * @param theColor color of the line
+     * @param color color of the line
      */
-    void setColor(Color theColor);
+    void setColor(Color color);
 
     /**
      * Gets the color of the shape's line.
@@ -50,9 +50,9 @@ public interface ShapeCreatorControls {
 
     /**
      * Sets the width of the shape's line.
-     * @param theWidth the line width
+     * @param width the line width
      */
-    void setWidth(int theWidth);
+    void setWidth(int width);
 
     /**
      * Gets the width of the shape's line.

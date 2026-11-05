@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The logic and bahaviors for a drawing tool. Allows shapes to be created in a
+ * The logic and behaviors for a drawing tool. Allows shapes to be created in a
  * two-dimensional space.
  *
  * @author Charles Bryan
  * @author Steven Golob
- * @version Winter 2026
+ * @version Autumn 2026
  */
 public class ShapeCreator implements PropChangeEnabledShapeCreatorControls {
 
@@ -42,16 +42,18 @@ public class ShapeCreator implements PropChangeEnabledShapeCreatorControls {
     private final List<ColorfulShape> myShapeList;
 
     /**
-     * Creates a game with a piece in the starting location 0, 0.
+     * Creates a shape creator with no shapes.
      */
     public ShapeCreator() {
         this(new ArrayList<>());
     }
 
     /**
-     * Creates a game with a piece in the starting location 0, 0.
+     * Creates a shape creator that starts with the given shapes.
+     *
+     * @param shapes the shapes to start with
      */
-    public ShapeCreator(final List<ColorfulShape> theShapes) {
+    public ShapeCreator(final List<ColorfulShape> shapes) {
         super();
 
         if (instanceCount > 0) {
@@ -62,7 +64,7 @@ public class ShapeCreator implements PropChangeEnabledShapeCreatorControls {
         instanceCount++;
 
         myPcs = new PropertyChangeSupport(this);
-        myShapeList = theShapes;
+        myShapeList = shapes;
         myCurrentColor = UWColor.PURPLE.getColor();
         myCurrentWidth = DEFAULT_WIDTH;
         myPencil = new PencilTool();
@@ -73,15 +75,15 @@ public class ShapeCreator implements PropChangeEnabledShapeCreatorControls {
      * {@inheritDoc}
      *
      * When the creation of a shape is begun with this method, all interested parties will be
-     * notified of the action via PROPERTY_CURRENT_SHAPE.
+     * notified of the action via a CurrentShapeChanged event.
      *
-     * @param theX x coordinate of the starting point
-     * @param theY y coordinate of the starting point
+     * @param x x coordinate of the starting point
+     * @param y y coordinate of the starting point
      */
     @Override
-    public void startDrawing(final int theX, final int theY) {
+    public void startDrawing(final int x, final int y) {
         if (myCurrentWidth > 0) {
-            myPencil.setStartPoint(new Point(theX, theY));
+            myPencil.setStartPoint(new Point(x, y));
             final ColorfulShape ps =
                     new ColorfulShape(myPencil.getShape(),
                             myCurrentColor,
@@ -96,15 +98,15 @@ public class ShapeCreator implements PropChangeEnabledShapeCreatorControls {
      * {@inheritDoc}
      *
      * When the creation of a shape is continued with this method, all interested parties will be
-     * notified of the action via PROPERTY_CURRENT_SHAPE.
+     * notified of the action via a CurrentShapeChanged event.
      *
-     * @param theX x coordinate of the last point of the current shape
-     * @param theY y coordinate of the last point of the current shape
+     * @param x x coordinate of the last point of the current shape
+     * @param y y coordinate of the last point of the current shape
      */
     @Override
-    public void continueDrawing(final int theX, final int theY) {
+    public void continueDrawing(final int x, final int y) {
         if (myCurrentWidth > 0) {
-            myPencil.setNextPoint(new Point(theX, theY));
+            myPencil.setNextPoint(new Point(x, y));
             final ColorfulShape ps =
                     new ColorfulShape(myPencil.getShape(),
                             myCurrentColor,
@@ -119,14 +121,14 @@ public class ShapeCreator implements PropChangeEnabledShapeCreatorControls {
      * {@inheritDoc}
      *
      * When the current shape is completed with this method, all interested parties will be
-     * notified of the action via PROPERTY_CURRENT_SHAPE. The new value will be null to represent
-     * the shape's completion, and the old value will have the finished shape.
+     * notified of the action via a CurrentShapeChanged event with a null shape, followed by a
+     * SavedShapesChanged event that includes the finished shape.
      *
-     * @param theX x coordinate of the final point
-     * @param theY y coordinate of the final point
+     * @param x x coordinate of the final point
+     * @param y y coordinate of the final point
      */
     @Override
-    public void endDrawing(final int theX, final int theY) {
+    public void endDrawing(final int x, final int y) {
 
         if (myCurrentWidth > 0) {
             final ColorfulShape ps =
@@ -151,9 +153,9 @@ public class ShapeCreator implements PropChangeEnabledShapeCreatorControls {
     }
 
     @Override
-    public void setColor(final Color theColor) {
+    public void setColor(final Color color) {
         final Color old = myCurrentColor;
-        myCurrentColor = theColor;
+        myCurrentColor = color;
         final SketcherEvent event =
                 new SketcherEvent.ColorChanged(old, myCurrentColor, SketcherEvent.now());
         myPcs.firePropertyChange(event.getPropertyName(), null, event);
@@ -166,9 +168,9 @@ public class ShapeCreator implements PropChangeEnabledShapeCreatorControls {
     }
 
     @Override
-    public void setWidth(final int theWidth) {
+    public void setWidth(final int width) {
         final int old = myCurrentWidth;
-        myCurrentWidth = theWidth;
+        myCurrentWidth = width;
         final SketcherEvent event =
                 new SketcherEvent.WidthChanged(old, myCurrentWidth, SketcherEvent.now());
         myPcs.firePropertyChange(event.getPropertyName(), null, event);
@@ -200,27 +202,27 @@ public class ShapeCreator implements PropChangeEnabledShapeCreatorControls {
     }
 
     @Override
-    public void addPropertyChangeListener(final PropertyChangeListener theListener) {
-        myPcs.addPropertyChangeListener(theListener);
+    public void addPropertyChangeListener(final PropertyChangeListener listener) {
+        myPcs.addPropertyChangeListener(listener);
         fireAllProperties();
     }
 
     @Override
-    public void addPropertyChangeListener(final String thePropertyName,
-                                          final PropertyChangeListener theListener) {
-        myPcs.addPropertyChangeListener(thePropertyName, theListener);
+    public void addPropertyChangeListener(final String propertyName,
+                                          final PropertyChangeListener listener) {
+        myPcs.addPropertyChangeListener(propertyName, listener);
         fireAllProperties();
     }
 
     @Override
-    public void removePropertyChangeListener(final PropertyChangeListener theListener) {
-        myPcs.removePropertyChangeListener(theListener);
+    public void removePropertyChangeListener(final PropertyChangeListener listener) {
+        myPcs.removePropertyChangeListener(listener);
     }
 
     @Override
-    public void removePropertyChangeListener(final String thePropertyName,
-                                             final PropertyChangeListener theListener) {
-        myPcs.removePropertyChangeListener(thePropertyName, theListener);
+    public void removePropertyChangeListener(final String propertyName,
+                                             final PropertyChangeListener listener) {
+        myPcs.removePropertyChangeListener(propertyName, listener);
     }
 
     private void fireAllProperties() {
@@ -248,19 +250,19 @@ public class ShapeCreator implements PropChangeEnabledShapeCreatorControls {
                 .toList();
     }
 
-    private ColorfulShape clonePaintedShape(final ColorfulShape thePaintedShape) {
+    private ColorfulShape clonePaintedShape(final ColorfulShape paintedShape) {
         return new ColorfulShape(
-                cloneShape(thePaintedShape.shape()),
-                thePaintedShape.color(),
-                thePaintedShape.width());
+                cloneShape(paintedShape.shape()),
+                paintedShape.color(),
+                paintedShape.width());
     }
 
-    private Shape cloneShape(final Shape theSahape) {
-        return switch (theSahape) {
+    private Shape cloneShape(final Shape shape) {
+        return switch (shape) {
             case final Path2D path2D -> (Shape) path2D.clone();
             case final Rectangle2D rectangle2D -> (Shape) rectangle2D.clone();
             case final Ellipse2D ellipse2D -> (Shape) ellipse2D.clone();
-            default -> theSahape;
+            default -> shape;
         };
     }
 

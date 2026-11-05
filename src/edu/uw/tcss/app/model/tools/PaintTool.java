@@ -9,7 +9,7 @@ import java.awt.Shape;
  * 
  * @author Charles Bryan
  * @author Steven Golob
- * @version Winter 2026
+ * @version Autumn 2026
  */
 public interface PaintTool {
 
@@ -23,16 +23,16 @@ public interface PaintTool {
     /**
      * Sets the initial anchor point for the current Shape drawn by this tool.
      * 
-     * @param thePoint the start point to set
+     * @param point the start point to set
      */
-    void setStartPoint(Point thePoint);
+    void setStartPoint(Point point);
 
     /**
      * Sets the next point for the current Shape drawn by this tool.
      * 
-     * @param thePoint the next point to set
+     * @param point the next point to set
      */
-    void setNextPoint(Point thePoint);
+    void setNextPoint(Point point);
 
     /**
      * Resets the tool using default values.

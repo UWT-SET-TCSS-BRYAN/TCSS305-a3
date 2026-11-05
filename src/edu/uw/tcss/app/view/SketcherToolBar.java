@@ -22,7 +22,7 @@ import javax.swing.SwingConstants;
  * 
  * @author Charles Bryan
  * @author Steven Golob
- * @version Winter 2026
+ * @version Autumn 2026
  */
 public class SketcherToolBar extends JToolBar implements PropertyChangeListener {
 
@@ -56,9 +56,9 @@ public class SketcherToolBar extends JToolBar implements PropertyChangeListener 
     /**
      * Constructs the toolbar for the Sketcher application.
      * 
-     * @param theShapeCreator the paint panel
+     * @param shapeCreator the paint panel
      */
-    SketcherToolBar(final ShapeCreatorControls theShapeCreator) {
+    SketcherToolBar(final ShapeCreatorControls shapeCreator) {
         super(SwingConstants.HORIZONTAL);
         myClearButton = new JButton();
         myUndoButton = new JButton();
@@ -66,7 +66,7 @@ public class SketcherToolBar extends JToolBar implements PropertyChangeListener 
         myWidthButton = new JButton();
         myColorIcon = new ColorIcon(Color.BLACK);
 
-        myShapeCreator = theShapeCreator;
+        myShapeCreator = shapeCreator;
         setupComponents();
         layoutComponents();
         addListeners();
@@ -113,9 +113,9 @@ public class SketcherToolBar extends JToolBar implements PropertyChangeListener 
     }
 
     @Override
-    public void propertyChange(final PropertyChangeEvent theEvent) {
-        if (theEvent.getNewValue() instanceof final SketcherEvent event) {
-            switch (event) {
+    public void propertyChange(final PropertyChangeEvent event) {
+        if (event.getNewValue() instanceof final SketcherEvent sketcherEvent) {
+            switch (sketcherEvent) {
                 case final SketcherEvent.ColorChanged e -> {
                     myColorIcon.setColor(e.newColor());
                     myColorIcon.repaint();

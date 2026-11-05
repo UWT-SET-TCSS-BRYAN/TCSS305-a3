@@ -12,7 +12,7 @@ import java.beans.PropertyChangeListener;
  *
  * @author Charles Bryan
  * @author Steven Golob
- * @version Winter 2026
+ * @version Autumn 2026
  */
 public interface PropChangeEnabledShapeCreatorControls extends ShapeCreatorControls {
 
@@ -22,9 +22,9 @@ public interface PropChangeEnabledShapeCreatorControls extends ShapeCreatorContr
      * called as many times as it is added. If listener is null, no exception is thrown and
      * no action is taken.
      *
-     * @param theListener The PropertyChangeListener to be added
+     * @param listener The PropertyChangeListener to be added
      */
-    void addPropertyChangeListener(PropertyChangeListener theListener);
+    void addPropertyChangeListener(PropertyChangeListener listener);
 
 
     /**
@@ -34,10 +34,10 @@ public interface PropChangeEnabledShapeCreatorControls extends ShapeCreatorContr
      * of times it was added for that property. If propertyName or listener is null, no
      * exception is thrown and no action is taken.
      *
-     * @param thePropertyName The name of the property to listen on.
-     * @param theListener The PropertyChangeListener to be added
+     * @param propertyName The name of the property to listen on.
+     * @param listener The PropertyChangeListener to be added
      */
-    void addPropertyChangeListener(String thePropertyName, PropertyChangeListener theListener);
+    void addPropertyChangeListener(String propertyName, PropertyChangeListener listener);
 
     /**
      * Remove a PropertyChangeListener from the listener list. This removes a
@@ -46,9 +46,9 @@ public interface PropChangeEnabledShapeCreatorControls extends ShapeCreatorContr
      * removed. If listener is null, or was never added, no exception is thrown and no action
      * is taken.
      *
-     * @param theListener The PropertyChangeListener to be removed
+     * @param listener The PropertyChangeListener to be removed
      */
-    void removePropertyChangeListener(PropertyChangeListener theListener);
+    void removePropertyChangeListener(PropertyChangeListener listener);
 
     /**
      * Remove a PropertyChangeListener for a specific property. If listener was added more than
@@ -57,9 +57,9 @@ public interface PropChangeEnabledShapeCreatorControls extends ShapeCreatorContr
      * is taken. If listener is null, or was never added for the specified property, no
      * exception is thrown and take no action.
      *
-     * @param thePropertyName The name of the property that was listened on.
-     * @param theListener The PropertyChangeListener to be removed
+     * @param propertyName The name of the property that was listened on.
+     * @param listener The PropertyChangeListener to be removed
      */
-    void removePropertyChangeListener(String thePropertyName,
-                                      PropertyChangeListener theListener);
+    void removePropertyChangeListener(String propertyName,
+                                      PropertyChangeListener listener);
 }

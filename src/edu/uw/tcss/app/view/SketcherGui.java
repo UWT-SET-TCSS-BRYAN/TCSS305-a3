@@ -23,7 +23,7 @@ import javax.swing.JPanel;
  *
  * @author Charles Bryan
  * @author Steven Golob
- * @version Winter 2026
+ * @version Autumn 2026
  */
 public class SketcherGui extends JPanel {
 
@@ -43,7 +43,7 @@ public class SketcherGui extends JPanel {
 
     private final PropChangeEnabledShapeCreatorControls myShapeCreator;
 
-    /** The painting surface for the PowerPaint application. */
+    /** The painting surface for the Sketch Pad application. */
     private final SketcherCanvas myPaintPanel;
 
     private final SketcherToolBar myToolBar;
@@ -51,11 +51,11 @@ public class SketcherGui extends JPanel {
     /**
      * Creates and sets-up a sketch pad GUI to be displayed.
      *
-     * @param theShapeCreator the back-end logic for the sketch pad application
+     * @param shapeCreator the back-end logic for the sketch pad application
      */
-    public SketcherGui(final PropChangeEnabledShapeCreatorControls theShapeCreator) {
+    public SketcherGui(final PropChangeEnabledShapeCreatorControls shapeCreator) {
         super(new BorderLayout());
-        myShapeCreator = theShapeCreator;
+        myShapeCreator = shapeCreator;
         myPaintPanel = new SketcherCanvas(myShapeCreator);
         myToolBar = new SketcherToolBar(myShapeCreator);
         layoutComponents();

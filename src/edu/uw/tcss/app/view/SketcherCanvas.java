@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  *
  * @author Charles Bryan
  * @author Steven Golob
- * @version Winter 2026
+ * @version Autumn 2026
  */
 public class SketcherCanvas extends JPanel implements PropertyChangeListener {
 
@@ -47,9 +47,9 @@ public class SketcherCanvas extends JPanel implements PropertyChangeListener {
     /**
      * Constructs the Canvas to sketch on.
      */
-    public SketcherCanvas(final ShapeCreatorControls theShapeCreator) {
+    public SketcherCanvas(final ShapeCreatorControls shapeCreator) {
         super();
-        myShapeCreator = theShapeCreator;
+        myShapeCreator = shapeCreator;
 
         myCurrentShape = new ColorfulShape(OFF_SCREEN, Color.BLACK, 0);
         myExistingShapes = new ArrayList<>();
@@ -70,9 +70,9 @@ public class SketcherCanvas extends JPanel implements PropertyChangeListener {
     }
 
     @Override
-    public void paintComponent(final Graphics theGraphics) {
-        super.paintComponent(theGraphics);
-        final Graphics2D g2d = (Graphics2D) theGraphics;
+    public void paintComponent(final Graphics graphics) {
+        super.paintComponent(graphics);
+        final Graphics2D g2d = (Graphics2D) graphics;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -106,9 +106,9 @@ public class SketcherCanvas extends JPanel implements PropertyChangeListener {
     }
 
     @Override
-    public void propertyChange(final PropertyChangeEvent theEvent) {
-        if (theEvent.getNewValue() instanceof final SketcherEvent event) {
-            switch (event) {
+    public void propertyChange(final PropertyChangeEvent event) {
+        if (event.getNewValue() instanceof final SketcherEvent sketcherEvent) {
+            switch (sketcherEvent) {
                 case final SketcherEvent.CurrentShapeChanged e -> {
                     myCurrentShape = e.shape() == null
                             ? new ColorfulShape(OFF_SCREEN, Color.BLACK, 0)

@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * a tutorial on creating custom dynamic icons.
  * 
  * @author Alan Fowler
- * @version Autumn 2015
+ * @version Autumn 2026
  */
 public final class ColorIcon extends JPanel {
 
@@ -37,28 +37,28 @@ public final class ColorIcon extends JPanel {
     /**
      * Constructor initializing fields.
      * 
-     * @param theColor The color of the icon.
+     * @param color The color of the icon.
      */
-    public ColorIcon(final Color theColor) {
+    public ColorIcon(final Color color) {
         super();
-        myColor = theColor;
+        myColor = color;
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
 
     /**
      * Changes the color of the icon.
      * 
-     * @param theColor The color to change the icon to.
+     * @param color The color to change the icon to.
      */
-    public void setColor(final Color theColor) {
-        myColor = theColor;
+    public void setColor(final Color color) {
+        myColor = color;
     }
 
 
     @Override
-    protected void paintComponent(final Graphics theGraphics) {
-        super.paintComponent(theGraphics);
-        final Graphics2D g2d = (Graphics2D) theGraphics;
+    protected void paintComponent(final Graphics graphics) {
+        super.paintComponent(graphics);
+        final Graphics2D g2d = (Graphics2D) graphics;
         g2d.setPaint(myColor);
         g2d.fillRect(0, 0, WIDTH, HEIGHT);
 

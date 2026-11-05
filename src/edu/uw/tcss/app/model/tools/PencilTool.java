@@ -10,7 +10,7 @@ import java.awt.geom.Path2D;
  *
  * @author Charles Bryan
  * @author Steven Golob
- * @version Winter 2026
+ * @version Autumn 2026
  */
 public class PencilTool implements PaintTool {
 
@@ -25,8 +25,9 @@ public class PencilTool implements PaintTool {
     }
 
     @Override
-    public void setStartPoint(final Point thePoint) {
-        myPath.moveTo(thePoint.getX(), thePoint.getY());
+    public void setStartPoint(final Point point) {
+        myPath.moveTo(point.getX(), point.getY());
+        myPath.lineTo(point.getX(), point.getY());
     }
 
     @Override
@@ -40,8 +41,8 @@ public class PencilTool implements PaintTool {
     }
 
     @Override
-    public void setNextPoint(final Point thePoint) {
-        myPath.lineTo(thePoint.getX(), thePoint.getY());
+    public void setNextPoint(final Point point) {
+        myPath.lineTo(point.getX(), point.getY());
     }
 
 }
